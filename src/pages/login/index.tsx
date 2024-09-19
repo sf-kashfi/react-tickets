@@ -1,5 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { onLoginRequest } from "../../app/services/Requests";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>("");
@@ -8,9 +9,12 @@ function LoginPage() {
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    // Mock authentication logic
-    if (username === "user" && password === "password") {
-      // Replace with actual authentication logic
+
+    const data = await onLoginRequest({
+      username: username,
+      password: password,
+    });
+    if (data) {
       await login({ username, email: "user@example.com" });
     } else {
       alert("Invalid username or password");
@@ -42,6 +46,6 @@ function LoginPage() {
       </form>
     </div>
   );
-};
+}
 
 export default LoginPage;
