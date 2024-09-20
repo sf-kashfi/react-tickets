@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { TOKEN_KEY } from "../app/utils/Constants";
 
 type User = string | null;
 
@@ -17,16 +18,14 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useLocalStorage<User>("token", null);
+  const [user, setUser] = useLocalStorage<User>(TOKEN_KEY, null);
   const navigate = useNavigate();
 
-  // call this function when you want to authenticate the user
   const login = async (token: string) => {
     setUser(token);
     navigate("/home");
   };
 
-  // call this function to sign out logged in user
   const logout = () => {
     setUser(null);
     navigate("/", { replace: true });
