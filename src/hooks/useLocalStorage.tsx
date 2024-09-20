@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-// Define the hook using a generic type <T> to allow flexibility in the type of stored data
 export const useLocalStorage = <T,>(keyName: string, defaultValue: T): [T, (newValue: T) => void] => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {

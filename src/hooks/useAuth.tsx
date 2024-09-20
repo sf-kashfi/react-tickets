@@ -2,14 +2,11 @@ import { createContext, ReactNode, useContext, useMemo } from "react";
 import { useLocalStorage } from "./useLocalStorage";
 import { useNavigate } from "react-router-dom";
 
-type User = {
-  username: string;
-  email: string;
-} | null;
+type User = string | null;
 
 interface AuthContextType {
   user: User;
-  login: (data: User) => Promise<void>;
+  login: (token: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -20,12 +17,12 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useLocalStorage<User>("user", null);
+  const [user, setUser] = useLocalStorage<User>("token", null);
   const navigate = useNavigate();
 
   // call this function when you want to authenticate the user
-  const login = async (data: User) => {
-    setUser(data);
+  const login = async (token: string) => {
+    setUser(token);
     navigate("/home");
   };
 

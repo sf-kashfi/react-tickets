@@ -14,8 +14,9 @@ function LoginPage() {
       username: username,
       password: password,
     });
+
     if (data) {
-      await login({ username, email: "user@example.com" });
+      await login(data);
     } else {
       alert("Invalid username or password");
     }

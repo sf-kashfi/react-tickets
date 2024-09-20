@@ -65,7 +65,12 @@ export const get: tGet = async (
   token = getToken(),
   resultCodeAction
 ) => {
-  axiosApiInstance.defaults.headers.common["token"] = token;
+  if (token) {
+    axiosApiInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`;
+  }
+
   try {
     const { data } = await axiosApiInstance.get(url, {
       params,
@@ -100,7 +105,12 @@ export const post: tPost = async (
   showNotif = false,
   token = getToken()
 ) => {
-  axiosApiInstance.defaults.headers.common["token"] = token;
+  if (token) {
+    axiosApiInstance.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${token}`;
+  }
+
   try {
     const { data } = await axiosApiInstance.post(url, body, { params });
     return onFulfilledAction(showNotif, data);
@@ -117,22 +127,19 @@ const onFulfilledAction = (
   resultCodeAction?: (v: string) => void
 ) => {
   if (resultCodeAction) {
-    resultCodeAction(data.value?.resultCode);
-    if (data.value.value === undefined) {
-      return data.value;
-    }
-    return data.value.value;
+    resultCodeAction(data.result);
   }
 
-  if (showNotif && data.value?.success) {
-    toast.success(data.value?.message || "Done!");
-  }
-  if (!data.value?.success) {
-    toast.error(data.value?.message);
+  if (showNotif && data.result === "success") {
+    toast.success(data.message || "Operation successful!");
+  } else if (data.result !== "success") {
+    toast.error(data.message || "An error occurred!");
     return null;
   }
-  if (data.value.value === undefined) {
-    return data.value;
+
+  if (data.token !== undefined) {
+    return data.token;
   }
+
   return data.value.value;
 };
