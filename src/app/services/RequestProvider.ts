@@ -134,13 +134,17 @@ const onFulfilledAction = (
 
   if (showNotif && data.result === "success") {
     toast.success(data.message || "Operation successful!");
-  } else if (data.result === "unauthorized") {
+  } else if (data.result === "unauthorized" || data.result === "wrong_pass") {
     toast.error(data.message || "An error occurred!");
     return null;
   }
 
   if (data.token !== undefined) {
     return data.token;
+  }
+
+  if (data.username !== undefined) {
+    return data.username;
   }
 
   return data;

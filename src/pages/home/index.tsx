@@ -1,11 +1,16 @@
-import { FormEvent } from "react";
-import { onGetListRequest, onLogoutRequest } from "../../app/services/Requests";
+import { FormEvent, useEffect, useState } from "react";
+import {
+  onGetInfoRequest,
+  onGetListRequest,
+  onLogoutRequest,
+} from "../../app/services/Requests";
 import { useAuth } from "../../hooks/useAuth";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ITEMS_PER_PAGE } from "../../app/utils/Constants";
 
 function HomePage() {
   const { logout } = useAuth();
+  const [username, setUsername] = useState<string | null>(null);
 
   const handleLogout = async (e: FormEvent) => {
     e.preventDefault();
@@ -17,6 +22,18 @@ function HomePage() {
       logout();
     }
   };
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      const response = await onGetInfoRequest();
+      if (response) {
+        setUsername(response);
+      } else {
+        console.error("Failed to fetch username");
+      }
+    };
+    fetchUsername();
+  }, []);
 
   const {
     status,
@@ -46,7 +63,7 @@ function HomePage() {
 
   return (
     <>
-      <div>Hello There ...</div>
+      <div>Hello {username ? username : "There"} ...</div>
       <button onClick={handleLogout}>Logout</button>
 
       {status === "pending" ? (

@@ -4,4 +4,5 @@ export const URLs = {
   login: "Login",
   logout: "logout",
   list: "list",
+  username: "username",
 };
