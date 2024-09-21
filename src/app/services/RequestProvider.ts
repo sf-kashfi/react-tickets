@@ -134,7 +134,7 @@ const onFulfilledAction = (
 
   if (showNotif && data.result === "success") {
     toast.success(data.message || "Operation successful!");
-  } else if (data.result !== "success") {
+  } else if (data.result === "unauthorized") {
     toast.error(data.message || "An error occurred!");
     return null;
   }
@@ -143,5 +143,5 @@ const onFulfilledAction = (
     return data.token;
   }
 
-  return data.value.value;
+  return data;
 };
