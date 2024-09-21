@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import { createContext, ReactNode, useContext, useEffect, useMemo } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TOKEN_KEY } from "../app/utils/Constants";
 
 type User = string | null;
@@ -20,6 +20,13 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useLocalStorage<User>(TOKEN_KEY, null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user && location.pathname !== "/home") {
+      navigate("/home", { replace: true });
+    }
+  }, [user, navigate, location]);
 
   const login = async (token: string) => {
     setUser(token);
