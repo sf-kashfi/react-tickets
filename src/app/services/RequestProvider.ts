@@ -66,9 +66,10 @@ export const get: tGet = async (
   resultCodeAction
 ) => {
   if (token) {
+    const trimmedToken = token.trim().replace(/^['"]+|['"]+$/g, "");
     axiosApiInstance.defaults.headers.common[
       "Authorization"
-    ] = `Bearer ${token}`;
+    ] = `Bearer ${trimmedToken}`;
   }
 
   try {
@@ -106,9 +107,10 @@ export const post: tPost = async (
   token = getToken()
 ) => {
   if (token) {
+    const trimmedToken = token.trim().replace(/^['"]+|['"]+$/g, "");
     axiosApiInstance.defaults.headers.common[
       "Authorization"
-    ] = `Bearer ${token}`;
+    ] = `Bearer ${trimmedToken}`;
   }
 
   try {
