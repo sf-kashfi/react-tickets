@@ -5,67 +5,69 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+#container {
+  width: 100vw;
+  height: 100vh;
+  background: #aaccff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#container select {
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.threeDee {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 300px;
+  transition: transform 300ms, filter 300ms;
 }
 
-.card {
-  padding: 2em;
+.paper {
+  background: pink;
+  padding: 30px;
 }
 
-.read-the-docs {
-  color: #888;
+.paper.dark {
+  background: linear-gradient(pink, darken(pink, 6%), pink);
 }
 
-.ribbon {
+.fold {
+  transition: transform 400ms;
+  backface-visibility: hidden;
+}
+
+.inside {
   position: absolute;
-  left: 0;
   top: 0;
-  z-index: 1;
-  overflow: hidden;
-  width: 75px;
-  height: 75px;
-  text-align: right;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  z-index: -1;
 }
 
-.ribbon span {
-  font-size: 10px;
-  font-weight: bold;
-  color: #FFF;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 20px;
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
-  width: 100px;
-  display: block;
-  background: #fb0d0d;
-  box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-  position: absolute;
-  top: 19px;
-  left: -21px;
+.topside {
+  z-index: 1;
+  transform-origin: bottom;
+}
+
+.bottomside {
+  transform-origin: top;
+  transform: rotateX(180deg) translateX(-1px);
+  box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
+}
+
+.threeDee:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.2));
+}
+
+.threeDee:hover .topside {
+  transform: rotateX(-180deg);
+}
+
+.threeDee:hover .bottomside {
+  transform: none;
 }

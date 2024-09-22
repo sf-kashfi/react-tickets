@@ -7,7 +7,7 @@ import {
 import { useAuth } from "../../hooks/useAuth";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ITEMS_PER_PAGE } from "../../app/utils/Constants";
-import FlightTicket from "../../components/FlightTicket";
+import Inside from "../../components/flightTicket/Inside";
 
 function HomePage() {
   const { logout } = useAuth();
@@ -99,7 +99,7 @@ function HomePage() {
           {data.pages.map((page) => (
             <div key={page.nextPage}>
               {page.result.map((project) => (
-                <FlightTicket key={project.boarding} {...project} />
+                <Inside key={project.boarding} {...project} />
               ))}
             </div>
           ))}
