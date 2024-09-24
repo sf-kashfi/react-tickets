@@ -68,11 +68,7 @@ function HomePage() {
 
   const total = data?.pages[0]?.total || 0;
 
-  const popoverContent = (
-    <Button onClick={handleLogout}>
-      Logout
-    </Button>
-  );
+  const popoverContent = <Button onClick={handleLogout}>Logout</Button>;
 
   return (
     <>

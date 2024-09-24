@@ -48,23 +48,14 @@ axiosApiInstance.interceptors.response.use(null, async (error) => {
  * this function is for GET method
  * @param url
  * @param params
- * @param showNotif
  */
 type tGet = <T>(
   url: string,
   params?: Record<string, any> | null,
-  showNotif?: boolean,
-  token?: string | null,
-  resultCodeAction?: (s: string) => void
+  token?: string | null
 ) => Promise<T | null>;
 
-export const get: tGet = async (
-  url,
-  params = null,
-  showNotif = false,
-  token = getToken(),
-  resultCodeAction
-) => {
+export const get: tGet = async (url, params = null, token = getToken()) => {
   if (token) {
     const trimmedToken = token.trim().replace(/^['"]+|['"]+$/g, "");
     axiosApiInstance.defaults.headers.common[
@@ -77,7 +68,7 @@ export const get: tGet = async (
       params,
       paramsSerializer: { indexes: null },
     });
-    return onFulfilledAction(showNotif, data, resultCodeAction);
+    return onFulfilledAction(data);
   } catch (error) {
     toast.error((error as AxiosError).message);
     return null;
@@ -89,13 +80,11 @@ export const get: tGet = async (
  * @param url
  * @param body
  * @param params
- * @param showNotif
  */
 type tPost = <T>(
   url: string,
   body?: Record<string, any> | null,
   params?: Record<string, any> | null,
-  showNotif?: boolean,
   token?: string | null
 ) => Promise<T | null>;
 
@@ -103,7 +92,6 @@ export const post: tPost = async (
   url,
   body,
   params = null,
-  showNotif = false,
   token = getToken()
 ) => {
   if (token) {
@@ -115,7 +103,7 @@ export const post: tPost = async (
 
   try {
     const { data } = await axiosApiInstance.post(url, body, { params });
-    return onFulfilledAction(showNotif, data);
+    return onFulfilledAction(data);
   } catch (error) {
     toast.error((error as AxiosError).message);
     return null;
@@ -123,16 +111,8 @@ export const post: tPost = async (
 };
 //_______________________________________________________________________________________________________________________
 
-const onFulfilledAction = (
-  showNotif: boolean,
-  data: any,
-  resultCodeAction?: (v: string) => void
-) => {
-  if (resultCodeAction) {
-    resultCodeAction(data.result);
-  }
-
-  if (showNotif && data.result === "success") {
+const onFulfilledAction = (data: any) => {
+  if (data.result === "success") {
     toast.success(data.message || "Operation successful!");
   } else if (data.result === "unauthorized" || data.result === "wrong_pass") {
     toast.error(data.message || "An error occurred!");
