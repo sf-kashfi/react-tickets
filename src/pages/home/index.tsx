@@ -8,7 +8,6 @@ import { useAuth } from "../../hooks/useAuth";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ITEMS_PER_PAGE } from "../../app/utils/Constants";
 import Inside from "../../components/flightTicket/Inside";
-import Topside from "../../components/flightTicket/topside";
 
 function HomePage() {
   const { logout } = useAuth();

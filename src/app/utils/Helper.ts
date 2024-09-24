@@ -14,3 +14,14 @@ export const formatDate = (time: string) => {
     day: "numeric",
   })}`;
 };
+
+export const calculateFlightDuration = (
+  srcTime: string,
+  dstTime: string
+): string => {
+  const diffInMs = new Date(dstTime).getTime() - new Date(srcTime).getTime();
+  const hours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const minutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `${hours}h ${minutes}min`;
+};

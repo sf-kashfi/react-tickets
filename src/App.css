@@ -21,7 +21,7 @@
 .threeDee {
   position: relative;
   transform-style: preserve-3d;
-  perspective: 300px;
+  perspective: 500px;
   transition: transform 300ms, filter 300ms;
 }
 
