@@ -59,7 +59,15 @@
   box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.2);
 }
 
-.threeDee:hover {
+.fold.flipped {
+  transform: rotateX(-180deg);
+}
+
+.bottomside.flipped {
+  transform: none;
+}
+
+/* .threeDee:hover {
   transform: scale(1.1);
   filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.2));
 }
@@ -70,4 +78,4 @@
 
 .threeDee:hover .bottomside {
   transform: none;
-}
+} */

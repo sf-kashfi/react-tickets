@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ITEMS_PER_PAGE } from "../../app/utils/Constants";
 import Inside from "../../components/flightTicket/Inside";
+import FlightTicket from "../../components/flightTicket";
 
 function HomePage() {
   const { logout } = useAuth();
@@ -89,6 +90,8 @@ function HomePage() {
     <>
       <div>Hello {username ? username : "There"} ...</div>
       <button onClick={handleLogout}>Logout</button>
+
+      <FlightTicket {...flightData} />
 
       {status === "pending" ? (
         <p>Loading...</p>
