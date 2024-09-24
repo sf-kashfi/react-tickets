@@ -1,10 +1,12 @@
 import { useState, FormEvent } from "react";
+import { Form, Input, Button, Row, Col, Modal } from "antd";
 import { useAuth } from "../../hooks/useAuth";
 import { onLoginRequest } from "../../app/services/Requests";
 
 function LoginPage() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const { login } = useAuth();
 
   const handleLogin = async (e: FormEvent) => {
@@ -18,34 +20,53 @@ function LoginPage() {
     if (data) {
       await login(data);
     } else {
-      alert("Invalid username or password");
+      setIsModalVisible(true);
     }
   };
 
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
+
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">Username:</label>
-          <input
-            id="username"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Row justify="center" align="middle" style={{ height: "100vh" }}>
+      <Col xs={22} sm={16} md={12} lg={8}>
+        <Form layout="vertical" onSubmitCapture={handleLogin}>
+          <Form.Item label="Username" required>
+            <Input
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+            />
+          </Form.Item>
+          <Form.Item label="Password" required>
+            <Input.Password
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+
+        <Modal
+          title="Login Failed"
+          open={isModalVisible}
+          onOk={handleModalClose}
+          onCancel={handleModalClose}
+          cancelButtonProps={{ style: { display: "none" } }}
+          okButtonProps={{ style: { display: "none" } }}
+        >
+          <p>Invalid username or password. Please try again.</p>
+        </Modal>
+      </Col>
+    </Row>
   );
 }
 
