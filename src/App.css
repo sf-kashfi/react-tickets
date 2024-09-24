@@ -22,20 +22,19 @@
   position: relative;
   transform-style: preserve-3d;
   perspective: 500px;
-  transition: transform 300ms, filter 300ms;
+  transition: transform 500ms cubic-bezier(0.25, 0.8, 0.25, 1), 
+              filter 500ms cubic-bezier(0.25, 0.8, 0.25, 1), 
+              height 500ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  height: 200px; 
 }
 
-.paper {
-  background: pink;
-  padding: 30px;
-}
-
-.paper.dark {
-  background: linear-gradient(pink, darken(pink, 6%), pink);
+.threeDee.expanded {
+  height: 400px;
 }
 
 .fold {
-  transition: transform 400ms;
+  transition: transform 700ms cubic-bezier(0.25, 0.8, 0.25, 1), 
+              height 500ms cubic-bezier(0.25, 0.8, 0.25, 1);
   backface-visibility: hidden;
 }
 
@@ -67,15 +66,3 @@
   transform: none;
 }
 
-/* .threeDee:hover {
-  transform: scale(1.1);
-  filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.2));
-}
-
-.threeDee:hover .topside {
-  transform: rotateX(-180deg);
-}
-
-.threeDee:hover .bottomside {
-  transform: none;
-} */

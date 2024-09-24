@@ -13,23 +13,10 @@ function FlightTicket(flightData: Flight) {
 
   return (
     <>
-      <div className="threeDee">
-        <div className="inside">
-          <Topside {...flightData} />
-        </div>
-        <div className="fold topside">
-          <Inside {...flightData} />
-        </div>
-        <div className="fold bottomside">
-          <Bottomside {...flightData} />
-        </div>
-      </div>
-
-
-
-
-      
-      <div className="threeDee" onClick={handleClick}>
+      <div
+        className={`threeDee ${isFlipped ? "expanded" : ""}`}
+        onClick={handleClick}
+      >
         <div className={`inside ${isFlipped ? "flipped" : ""}`}>
           <Topside {...flightData} />
         </div>
@@ -39,7 +26,7 @@ function FlightTicket(flightData: Flight) {
         <div className={`fold bottomside ${isFlipped ? "flipped" : ""}`}>
           <Bottomside {...flightData} />
         </div>
-      </div>{" "}
+      </div>
     </>
   );
 }

@@ -62,7 +62,7 @@ function Inside(FlightProps: Flight) {
             border: "2px dashed #999",
             borderRadius: "6px",
             padding: "1px 20px",
-            marginTop: "10px",
+            marginTop: "3px",
             textAlign: "center",
           }}
         >
