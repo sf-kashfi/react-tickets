@@ -43,26 +43,18 @@ function Topside(FlightProps: Flight) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-around",
+                position: "relative",
               }}
             >
-              <div
-                style={{
-                  transform: "translateY(-50%)",
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  backgroundColor: "gray",
-                }}
-              />
-              <img src={flightIcon} alt="Flight" style={{ width: "40px" }} />
-              <div
-                style={{
-                  transform: "translateY(-50%)",
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  backgroundColor: "gray",
-                }}
+              <div className="circles-wrapper">
+                {[...Array(5)].map((_, index) => (
+                  <div key={index} className="circle" />
+                ))}
+              </div>
+              <img
+                src={flightIcon}
+                alt="Flight"
+                style={{ width: "40px", position: "relative", zIndex: 1 }}
               />
             </div>
             <div
