@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ITEMS_PER_PAGE } from "../../app/utils/Constants";
 import FlightTicket from "../../components/flightTicket";
+import { Popover, Button, Row, Col } from "antd";
 
 function HomePage() {
   const { logout } = useAuth();
@@ -19,7 +20,6 @@ function HomePage() {
     if (data == "success") {
       logout();
     } else {
-      alert("Invalid token");
       logout();
     }
   };
@@ -62,11 +62,49 @@ function HomePage() {
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
 
+  const viewed = data
+    ? data.pages.reduce((acc, page) => acc + page.result.length, 0)
+    : 0;
+
+  const total = data?.pages[0]?.total || 0;
+
+  const popoverContent = (
+    <Button onClick={handleLogout}>
+      Logout
+    </Button>
+  );
 
   return (
     <>
-      <div>Hello {username ? username : "There"} ...</div>
-      <button onClick={handleLogout}>Logout</button>
+      <Row justify="space-between" align="middle">
+        <Col></Col>
+        <Col>
+          <Popover content={popoverContent} arrow={false} trigger="click">
+            <Button size="large">{username ? username : "Admin"}</Button>
+          </Popover>
+        </Col>
+      </Row>
+
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{ padding: "10px 100px" }}
+      >
+        <Col>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ fontSize: 16, fontWeight: "bold", marginRight: 20 }}>
+              Viewed: {viewed}
+            </span>
+          </div>
+        </Col>
+        <Col>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ fontSize: 16, fontWeight: "bold" }}>
+              Total: {total}
+            </span>
+          </div>
+        </Col>
+      </Row>
 
       {status === "pending" ? (
         <p>Loading...</p>
@@ -74,25 +112,35 @@ function HomePage() {
         <span>Error: {error.message}</span>
       ) : (
         <>
-          {data.pages.map((page) => (
-            <div key={page.nextPage}>
-              {page.result.map((project) => (
-                <FlightTicket key={project.boarding} {...project} />
-              ))}
-            </div>
-          ))}
-          <div>
-            <button
+          <Row gutter={[16, 16]} justify="center" style={{ padding: "20px" }}>
+            {data.pages.map((page) => (
+              <div key={page.nextPage}>
+                {page.result.map((project) => (
+                  <Col key={project.boarding}>
+                    <FlightTicket {...project} />
+                  </Col>
+                ))}
+              </div>
+            ))}
+          </Row>
+
+          <Row justify="center" style={{ margin: "20px 0" }}>
+            <Button
               onClick={() => fetchNextPage()}
               disabled={!hasNextPage || isFetchingNextPage}
+              style={{ marginRight: 10 }}
+              loading={isFetchingNextPage}
+              color="primary"
+              variant="solid"
             >
               {isFetchingNextPage
-                ? "Loading more..."
+                ? "Get Dtat"
                 : hasNextPage
-                ? "Load Newer"
+                ? "Load More"
                 : "Nothing more to load"}
-            </button>
-          </div>
+            </Button>
+          </Row>
+
           <div>
             {isFetching && !isFetchingNextPage
               ? "Background Updating..."

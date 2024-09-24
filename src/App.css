@@ -1,21 +1,8 @@
 #root {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
-}
-
-#container {
-  width: 100vw;
-  height: 100vh;
-  background: #aaccff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#container select {
-  width: 100%;
+ 
 }
 
 .threeDee {
@@ -29,7 +16,7 @@
 }
 
 .threeDee.expanded {
-  height: 400px;
+  height: 370px;
 }
 
 .fold {
